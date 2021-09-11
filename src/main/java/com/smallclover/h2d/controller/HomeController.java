@@ -105,7 +105,6 @@ public class HomeController {
 		Map<Integer,List<Relationship>> relationshipMap = relationshipList.stream()
 			.collect(Collectors.groupingBy(Relationship::getCPersonid, LinkedHashMap::new, Collectors.toList()));
 
-
 		model.addAttribute("biogMain", biogMain);	
 		model.addAttribute("relationshipMap", relationshipMap);
 		return "relationship";
@@ -117,6 +116,10 @@ public class HomeController {
 				BIOG_MAIN.C_PERSONID, 
 				BIOG_MAIN.C_NAME,
 				BIOG_MAIN.C_NAME_CHN, 
+				STATUS_DATA.C_FIRSTYEAR,
+				STATUS_DATA.C_LASTYEAR,
+				STATUS_DATA.C_NOTES,
+				STATUS_DATA.C_SUPPLEMENT,
 				STATUS_CODES.C_STATUS_DESC_CHN,
 				STATUS_TYPES.C_STATUS_TYPE_CHN
 			)
@@ -128,6 +131,8 @@ public class HomeController {
 			.where(BIOG_MAIN.C_PERSONID.eq(personId)).fetch().into(Status.class);
 
 		BiogMain biogMain = dsl.selectFrom(BIOG_MAIN).where(BIOG_MAIN.C_PERSONID.eq(personId)).fetchOne().into(BiogMain.class);
+
+
 		model.addAttribute("biogMain", biogMain);	
 		model.addAttribute("statusList", statusList);
 		return "status";

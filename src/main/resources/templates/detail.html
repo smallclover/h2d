@@ -6,6 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <style>
+      /* .custom_a{
+        text-decoration: none;
+        color: black;
+        border-bottom: 0px;
+      } */
+    </style>
 </head>
 <body>
     <div class="col-lg-8 mx-auto p-3 py-md-5">
@@ -17,7 +24,7 @@
         </header>
       
         <main>
-          <h1>[[${person.cNameChn}]]</h1>
+          <h1>[[|${person.cNameChn}(${person.cName})|]]</h1>
           <p class="fs-5 col-md-8">[[${person.cAltNameChn}]]</p>
           <div class="container px-4 py-5 border-top" id="icon-grid">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 py-5">
@@ -52,15 +59,15 @@
               <div class="col d-flex align-items-start">
                 <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#speedometer2"/></svg>
                 <div>
-                  <h4 class="fw-bold mb-0"><a th:href="@{/person-relationship/{person_id}(person_id=${person.cPersonid})}">详细</a></h4>
-                  <p>人物关系</p>
+                  <h4 class="fw-bold mb-0">人物关系</h4>
+                  <p><a class="custom_a" th:href="@{/person-relationship/{person_id}(person_id=${person.cPersonid})}">关系详细</a></p>
                 </div>
               </div>
               <div class="col d-flex align-items-start">
                 <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#toggles2"/></svg>
                 <div>
-                  <h4 class="fw-bold mb-0">Featured title</h4>
-                  <p>Paragraph of text beneath the heading to explain the heading.</p>
+                  <h4 class="fw-bold mb-0">人物状态</h4>
+                  <p><a class="custom_a" th:href="@{/person-status/{person_id}(person_id=${person.cPersonid})}">状态详细</a></p>
                 </div>
               </div>
               <div class="col d-flex align-items-start">

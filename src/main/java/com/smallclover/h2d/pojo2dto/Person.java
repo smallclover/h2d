@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class Person {
     private Integer cPersonid;
-    private String  cName;
-    private String  cNameChn;
+    private String cName;
+    private String cNameChn;
     private String cAltNameChn;
     private Integer cIndexYear;
     private Boolean cFemale;
