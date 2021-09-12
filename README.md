@@ -32,13 +32,25 @@ Google Sheet 版本
 
 + BIOG_MAIN
 
-#### 传记人物相人物
+#### 传记人物相关人物
 > 记录与该传记人物相关的人物，以及他们之间是通过何种关系进行的联系
 
 + ASSOC_CODES
 + ASSOC_CODE_TYPE_REL
 + ASSOC_DATA
 + ASSOC_TYPES
+
+#### 入仕相关
+> 人物的入仕的状态，种类等
+
++ ENTRY_CODES
++ ENTRY_CODE_TYPE_REL
++ ENTRY_DATA
++ ENTRY_TYPES
+
+#### 朝代
++ DYNASTIES
+
 
 #### 其他
 + ADDRESSES
@@ -66,10 +78,6 @@ Google Sheet 版本
 + DATABASE_LINK_CODES
 + DATABASE_LINK_DATA
 + DYNASTIES
-+ ENTRY_CODES
-+ ENTRY_CODE_TYPE_REL
-+ ENTRY_DATA
-+ ENTRY_TYPES
 + ETHNICITY_TRIBE_CODES
 + EVENTS_ADDR
 + EVENTS_DATA

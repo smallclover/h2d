@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.smallclover.h2d.model.tables.pojos.BiogMain;
+import com.smallclover.h2d.pojo2dto.Entry;
 import com.smallclover.h2d.pojo2dto.Person;
 import com.smallclover.h2d.pojo2dto.Relationship;
 import com.smallclover.h2d.pojo2dto.Status;
+import com.smallclover.h2d.pojo2dto.Text;
 
 import static com.smallclover.h2d.model.Tables.*;
 import static org.jooq.impl.DSL.*;
@@ -69,7 +71,7 @@ public class HomeController {
 			.leftJoin(DYNASTIES).on(DYNASTIES.C_DY.eq(BIOG_MAIN.C_DY))
 			.leftJoin(ALTNAME_DATA).on(ALTNAME_DATA.C_PERSONID.eq(BIOG_MAIN.C_PERSONID).and(ALTNAME_DATA.C_ALT_NAME_TYPE_CODE.eq(4)))// 字
 			.where(BIOG_MAIN.C_PERSONID.eq(personId))
-			.fetchSingle()
+			.fetchAny()
 			.into(Person.class);
 
 			model.addAttribute("person", person);
@@ -137,4 +139,37 @@ public class HomeController {
 		model.addAttribute("statusList", statusList);
 		return "status";
 	}
+
+	@RequestMapping(value = "/person-entry/{person_id}")
+	public String entry(@PathVariable("person_id") Integer personId, Model model) {
+		List<Entry> entryList = dsl.select(
+				BIOG_MAIN.C_PERSONID, 
+				BIOG_MAIN.C_NAME,
+				BIOG_MAIN.C_NAME_CHN, 
+				ENTRY_DATA.C_YEAR,
+				ENTRY_DATA.C_AGE,
+				ENTRY_DATA.C_EXAM_FIELD,
+				ENTRY_DATA.C_EXAM_RANK,
+				ENTRY_DATA.C_SEQUENCE,
+				ENTRY_DATA.C_ATTEMPT_COUNT,
+				ENTRY_DATA.C_NOTES,
+				ENTRY_CODES.C_ENTRY_DESC_CHN,
+				ENTRY_TYPES.C_ENTRY_TYPE_DESC_CHN
+
+			)
+			.from(BIOG_MAIN)
+			.leftJoin(ENTRY_DATA).on(ENTRY_DATA.C_PERSONID.eq(BIOG_MAIN.C_PERSONID))
+			.leftJoin(ENTRY_CODES).on(ENTRY_CODES.C_ENTRY_CODE.eq(ENTRY_DATA.C_ENTRY_CODE))
+			.leftJoin(ENTRY_CODE_TYPE_REL).on(ENTRY_CODE_TYPE_REL.C_ENTRY_CODE.eq(ENTRY_CODES.C_ENTRY_CODE))
+			.leftJoin(ENTRY_TYPES).on(ENTRY_TYPES.C_ENTRY_TYPE.eq(ENTRY_CODE_TYPE_REL.C_ENTRY_TYPE))
+			.where(BIOG_MAIN.C_PERSONID.eq(personId)).fetch().into(Entry.class);
+
+		BiogMain biogMain = dsl.selectFrom(BIOG_MAIN).where(BIOG_MAIN.C_PERSONID.eq(personId)).fetchOne().into(BiogMain.class);
+
+
+		model.addAttribute("biogMain", biogMain);	
+		model.addAttribute("entryList", entryList);
+		return "entry";
+	}
+
 }
